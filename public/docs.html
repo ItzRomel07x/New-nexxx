@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexx Auth API Documentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #dc2626; color: white; padding: 1rem 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .header-content { display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: bold; }
+        .back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; }
+        .back-btn:hover { background: rgba(255,255,255,0.2); }
+        .content { padding: 2rem 0; }
+        .section { margin-bottom: 3rem; }
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h2 { font-size: 2rem; margin-bottom: 1rem; color: #dc2626; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #dc2626; }
+        h4 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #374151; }
+        .endpoint { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
+        .method { background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.875rem; font-weight: 600; }
+        .url { background: #fee2e2; color: #dc2626; padding: 0.5rem; border-radius: 4px; font-family: 'Monaco', 'Consolas', monospace; margin: 1rem 0; }
+        .code-block { background: #1f2937; color: #10b981; padding: 1rem; border-radius: 8px; overflow-x: auto; position: relative; }
+        .code-block pre { font-family: 'Monaco', 'Consolas', monospace; font-size: 0.875rem; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #374151; border: 1px solid #4b5563; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+        .copy-btn:hover { background: #4b5563; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+        .feature { background: #f9fafb; padding: 1rem; border-radius: 8px; border-left: 4px solid #dc2626; }
+        .feature h4 { color: #dc2626; margin-bottom: 0.5rem; }
+        .toast { position: fixed; top: 1rem; right: 1rem; background: #10b981; color: white; padding: 0.75rem 1rem; border-radius: 4px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="toast" id="toast">Copied to clipboard!</div>
+    
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    Nexx Auth API Documentation
+                </div>
+                <a href="/" class="back-btn">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="container">
+            
+            <section class="section">
+                <h2>API Overview</h2>
+                <p>Nexx Auth provides a complete authentication system with enterprise-grade security features including HWID locking, version control, blacklist protection, and real-time webhooks.</p>
+            </section>
+
+            <section class="section">
+                <h2>Security Features</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h4>🔒 HWID Locking</h4>
+                        <p>Prevent account sharing across devices by locking accounts to specific hardware IDs.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🔄 Version Control</h4>
+                        <p>Force application updates by requiring specific version numbers.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🚫 Blacklist System</h4>
+                        <p>Block users by IP, username, email, or hardware ID.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📡 Real-time Webhooks</h4>
+                        <p>Get instant notifications via Discord or custom webhooks.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>API Endpoints</h2>
+                
+                <div class="endpoint">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <h3>User Authentication</h3>
+                        <span class="method">POST</span>
+                    </div>
+                    <div class="url">POST /api/v1/login</div>
+                    
+                    <h4>Request Body:</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode('login-request')">Copy</button>
+                        <pre id="login-request">{
+  "username": "your_username",
+  "password": "your_password",
+  "hwid": "hardware_id_string",
+  "app_version": "1.0.0",
+  "license_key": "your_license_key"
+}</pre>
+                    </div>
+
+                    <h4>Response:</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode('login-response')">Copy</button>
+                        <pre id="login-response">{
+  "success": true,
+  "message": "Login successful",
+  "user": {
+    "id": 123,
+    "username": "your_username",
+    "email": "user@example.com"
+  },
+  "session_token": "abc123..."
+}</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <h3>User Registration</h3>
+                        <span class="method">POST</span>
+                    </div>
+                    <div class="url">POST /api/v1/register</div>
+                    
+                    <h4>Request Body:</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode('register-request')">Copy</button>
+                        <pre id="register-request">{
+  "username": "new_username",
+  "password": "secure_password",
+  "email": "user@example.com",
+  "license_key": "valid_license_key"
+}</pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Integration Examples</h2>
+                
+                <h3>C# Example</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode('csharp-example')">Copy</button>
+                    <pre id="csharp-example">using (var client = new HttpClient())
+{
+    var loginData = new {
+        username = "testuser",
+        password = "password123",
+        hwid = GetHardwareId(),
+        app_version = "1.0.0",
+        license_key = "your_license_key"
+    };
+    
+    var json = JsonConvert.SerializeObject(loginData);
+    var content = new StringContent(json, Encoding.UTF8, "application/json");
+    
+    var response = await client.PostAsync("https://your-api.com/api/v1/login", content);
+    var result = await response.Content.ReadAsStringAsync();
+}</pre>
+                </div>
+
+                <h3>Python Example</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode('python-example')">Copy</button>
+                    <pre id="python-example">import requests
+import json
+
+login_data = {
+    "username": "testuser",
+    "password": "password123",
+    "hwid": get_hardware_id(),
+    "app_version": "1.0.0",
+    "license_key": "your_license_key"
+}
+
+response = requests.post(
+    "https://your-api.com/api/v1/login",
+    json=login_data,
+    headers={"Content-Type": "application/json"}
+)
+
+result = response.json()
+print(result)</pre>
+                </div>
+
+                <h3>JavaScript/Node.js Example</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode('javascript-example')">Copy</button>
+                    <pre id="javascript-example">const loginData = {
+    username: "testuser",
+    password: "password123",
+    hwid: getHardwareId(),
+    app_version: "1.0.0",
+    license_key: "your_license_key"
+};
+
+const response = await fetch("https://your-api.com/api/v1/login", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(loginData)
+});
+
+const result = await response.json();
+console.log(result);</pre>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Response Codes</h2>
+                <div class="endpoint">
+                    <h4>Success Responses:</h4>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li><strong>200 OK</strong> - Request successful</li>
+                        <li><strong>201 Created</strong> - User registration successful</li>
+                    </ul>
+                    
+                    <h4>Error Responses:</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>400 Bad Request</strong> - Invalid request data</li>
+                        <li><strong>401 Unauthorized</strong> - Invalid credentials</li>
+                        <li><strong>403 Forbidden</strong> - Account banned or HWID mismatch</li>
+                        <li><strong>409 Conflict</strong> - Username already exists</li>
+                        <li><strong>429 Too Many Requests</strong> - Rate limit exceeded</li>
+                        <li><strong>500 Internal Server Error</strong> - Server error</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function copyCode(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
