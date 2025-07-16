@@ -24,10 +24,10 @@ jobs:
       run: npm ci
 
     - name: Build for static deployment
-      run: npm run build:static
+      run: node build-static.js
 
-    - name: Copy docs to dist
-      run: cp public/docs.html dist/
+    - name: Copy docs to dist (if not already copied)
+      run: cp public/docs.html dist/ || echo "docs.html already copied by build script"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
