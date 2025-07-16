@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: './', // Use relative paths for GitHub Pages
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -14,6 +15,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    assetsDir: 'assets',
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
     },

@@ -184,6 +184,13 @@ Changelog:
   * Added vite.static.config.ts for standard static builds compatible with all deployment platforms
   * Set up PostgreSQL database with migrations and proper environment variable configuration
   * Project now works on Replit and is ready for deployment on GitHub Pages, Netlify, Render, Vercel, and other platforms
+- July 16, 2025. Fixed GitHub Pages deployment and authentication issues
+  * Resolved duplicate email constraint error in user authentication system
+  * Created static-only landing page for GitHub Pages deployment (App.static.tsx)
+  * Added GitHub Actions workflow for automatic deployment to GitHub Pages
+  * Fixed relative paths in vite.static.config.ts with base: './' for GitHub Pages compatibility
+  * Created comprehensive documentation page (docs.html) accessible without backend
+  * Authentication system now working properly with Firebase Google OAuth
 ```
 
 ## User Preferences

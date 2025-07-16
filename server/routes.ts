@@ -95,17 +95,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('Auth check - req.user:', req.user);
       console.log('Auth check - session:', req.session);
       
-      const userId = req.user.claims.sub;
-      console.log('Fetching user for ID:', userId);
+      const firebaseUid = req.user.claims.sub;
+      const email = req.user.claims.email;
+      console.log('Fetching user for Firebase UID:', firebaseUid, 'email:', email);
       
-      const user = await storage.getUser(userId);
-      console.log('Found user:', user);
+      // First try to get user by Firebase UID
+      let user = await storage.getUser(firebaseUid);
+      console.log('Found user by Firebase UID:', user);
+      
+      if (!user && email) {
+        // Fallback: try to find by email
+        console.log('User not found by UID, searching by email...');
+        const allUsers = await storage.getAllUsers();
+        user = allUsers.find(u => u.email === email);
+        console.log('Found user by email:', user);
+      }
       
       if (!user) {
+        console.log('User not found in database');
         return res.status(404).json({ message: "User not found" });
       }
       
-      const permissions = await getUserPermissions(userId);
+      const permissions = await getUserPermissions(user.id);
       console.log('User permissions:', permissions);
       
       res.json({ ...user, userPermissions: permissions });

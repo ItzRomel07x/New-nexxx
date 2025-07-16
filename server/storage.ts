@@ -26,7 +26,7 @@ import {
   type ActiveSession,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, and } from "drizzle-orm";
+import { eq, and, or } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { nanoid } from "nanoid";
 
@@ -135,12 +135,21 @@ export class DatabaseStorage implements IStorage {
       insertData.isActive = true;
     }
 
-    const [user] = await db
-      .insert(users)
-      .values(insertData)
-      .onConflictDoUpdate({
-        target: users.id,
-        set: {
+    // Check if user already exists by email or ID
+    const existingUser = await db
+      .select()
+      .from(users)
+      .where(or(
+        eq(users.id, userData.id),
+        eq(users.email, userData.email || '')
+      ))
+      .limit(1);
+
+    if (existingUser.length > 0) {
+      // Update existing user
+      const [user] = await db
+        .update(users)
+        .set({
           email: insertData.email,
           firstName: insertData.firstName,
           lastName: insertData.lastName,
@@ -149,10 +158,18 @@ export class DatabaseStorage implements IStorage {
           permissions: insertData.permissions,
           isActive: insertData.isActive,
           updatedAt: new Date(),
-        },
-      })
-      .returning();
-    return user;
+        })
+        .where(eq(users.id, existingUser[0].id))
+        .returning();
+      return user;
+    } else {
+      // Insert new user
+      const [user] = await db
+        .insert(users)
+        .values(insertData)
+        .returning();
+      return user;
+    }
   }
 
   async getAllUsers(): Promise<User[]> {
