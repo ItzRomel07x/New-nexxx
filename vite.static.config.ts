@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative paths for GitHub Pages
+  base: '/New-nexxx/', // GitHub Pages base path
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -19,6 +19,12 @@ export default defineConfig({
     rollupOptions: {
       input: path.resolve(__dirname, "index.html"),
     },
+  },
+  define: {
+    // Define environment variables for static build
+    'import.meta.env.VITE_FIREBASE_API_KEY': JSON.stringify(''),
+    'import.meta.env.VITE_FIREBASE_APP_ID': JSON.stringify(''),
+    'import.meta.env.VITE_FIREBASE_PROJECT_ID': JSON.stringify(''),
   },
   server: {
     port: 3000,

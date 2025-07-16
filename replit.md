@@ -188,9 +188,11 @@ Changelog:
   * Resolved duplicate email constraint error in user authentication system
   * Created static-only landing page for GitHub Pages deployment (App.static.tsx)
   * Added GitHub Actions workflow for automatic deployment to GitHub Pages
-  * Fixed relative paths in vite.static.config.ts with base: './' for GitHub Pages compatibility
+  * Fixed relative paths in vite.static.config.ts with base: '/New-nexxx/' for GitHub Pages compatibility
   * Created comprehensive documentation page (docs.html) accessible without backend
   * Authentication system now working properly with Firebase Google OAuth
+  * Fixed GitHub Pages white screen issue by setting correct base path and repository URL
+  * Static build now includes proper asset paths and documentation for GitHub Pages deployment
 ```
 
 ## User Preferences

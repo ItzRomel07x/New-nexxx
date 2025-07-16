@@ -7,7 +7,7 @@ export default function StaticLanding() {
   };
 
   const handleGitHub = () => {
-    window.open("https://github.com/yourusername/nexxauth", "_blank");
+    window.open("https://github.com/itzromel07x/New-nexxx", "_blank");
   };
 
   return (
